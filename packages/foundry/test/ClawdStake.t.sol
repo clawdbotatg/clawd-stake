@@ -24,13 +24,11 @@ contract ClawdStakeTest is Test {
         clawd = new MockERC20("CLAWD", "CLAWD", 18);
         staking = new ClawdStake(address(clawd));
 
-        // Mint tokens for testing
         clawd.mint(owner, 100_000_000 ether);
         clawd.mint(alice, 10_000_000 ether);
         clawd.mint(bob, 10_000_000 ether);
         clawd.mint(carol, 10_000_000 ether);
 
-        // Load house with 2M (100 stake slots)
         clawd.approve(address(staking), 2_000_000 ether);
         staking.loadHouse(2_000_000 ether);
     }
@@ -94,6 +92,7 @@ contract ClawdStakeTest is Test {
         assertApproxEqAbs(info.stakedAt, block.timestamp, 1);
         assertEq(staking.totalStaked(), STAKE_AMOUNT);
         assertEq(staking.totalStakers(), 1);
+        assertEq(staking.activeStakers(), 1);
     }
 
     function test_StakeDecrementsHouseReserve() public {
@@ -115,15 +114,166 @@ contract ClawdStakeTest is Test {
     }
 
     function test_CannotStakeInsufficientHouse() public {
-        // Withdraw all but less than 20K from house
         uint256 reserve = staking.houseReserve();
-        staking.withdrawHouse(reserve - 19_999 ether); // leave 19,999 CLAWD (not enough for 20K)
+        staking.withdrawHouse(reserve - 19_999 ether);
 
         vm.startPrank(alice);
         clawd.approve(address(staking), STAKE_AMOUNT);
         vm.expectRevert("House reserve too low");
         staking.stake();
         vm.stopPrank();
+    }
+
+    // ============ Issue #1: Balance accounting ============
+
+    function test_TotalAccountedBalanceMatchesReal() public {
+        // Before any stakes
+        assertEq(staking.totalAccountedBalance(), clawd.balanceOf(address(staking)));
+
+        // After stake
+        vm.startPrank(alice);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        assertEq(staking.totalAccountedBalance(), clawd.balanceOf(address(staking)));
+
+        // After unstake
+        vm.warp(block.timestamp + LOCK_DURATION);
+        vm.prank(alice);
+        staking.unstake();
+
+        assertEq(staking.totalAccountedBalance(), clawd.balanceOf(address(staking)));
+    }
+
+    function test_TotalCommittedTracking() public {
+        assertEq(staking.totalCommitted(), 0);
+
+        vm.startPrank(alice);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        assertEq(staking.totalCommitted(), YIELD_AMOUNT + BURN_AMOUNT);
+
+        vm.warp(block.timestamp + LOCK_DURATION);
+        vm.prank(alice);
+        staking.unstake();
+
+        assertEq(staking.totalCommitted(), 0);
+    }
+
+    // ============ Issue #2: Unique stakers ============
+
+    function test_TotalStakersCountsUniqueAddresses() public {
+        // Alice stakes, unstakes, stakes again
+        vm.startPrank(alice);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.warp(block.timestamp + LOCK_DURATION);
+        staking.unstake();
+
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.warp(block.timestamp + LOCK_DURATION);
+        staking.unstake();
+        vm.stopPrank();
+
+        // Bob stakes once
+        vm.startPrank(bob);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        // Should be 2 unique stakers, not 3 events
+        assertEq(staking.totalStakers(), 2);
+    }
+
+    // ============ Issue #3: stakedAt reset ============
+
+    function test_StakedAtResetOnUnstake() public {
+        vm.startPrank(alice);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        vm.warp(block.timestamp + LOCK_DURATION);
+        vm.prank(alice);
+        staking.unstake();
+
+        ClawdStake.StakeInfo memory info = staking.getStake(alice);
+        assertFalse(info.active);
+        assertEq(info.stakedAt, 0);
+    }
+
+    // ============ Issue #4: Abandoned stake reclaim ============
+
+    function test_ReclaimAbandoned() public {
+        vm.startPrank(alice);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        uint256 reserveBefore = staking.houseReserve();
+
+        // Can't reclaim too early (only 1 day past lock)
+        vm.warp(block.timestamp + LOCK_DURATION + 1 days);
+        vm.expectRevert("Too early to reclaim");
+        staking.reclaimAbandoned(alice);
+
+        // After 30 days past unlock, owner can reclaim
+        vm.warp(block.timestamp + 30 days);
+        staking.reclaimAbandoned(alice);
+
+        ClawdStake.StakeInfo memory info = staking.getStake(alice);
+        assertFalse(info.active);
+        assertEq(info.stakedAt, 0);
+        // Reserve gets back principal + committed funds
+        assertEq(staking.houseReserve(), reserveBefore + STAKE_AMOUNT + YIELD_AMOUNT + BURN_AMOUNT);
+        assertEq(staking.activeStakers(), 0);
+        assertEq(staking.totalStaked(), 0);
+        assertEq(staking.totalCommitted(), 0);
+    }
+
+    function test_CannotReclaimAsNonOwner() public {
+        vm.startPrank(alice);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        vm.warp(block.timestamp + LOCK_DURATION + 31 days);
+
+        vm.prank(bob);
+        vm.expectRevert();
+        staking.reclaimAbandoned(alice);
+    }
+
+    function test_CannotReclaimActiveUser() public {
+        // User who hasn't staked
+        vm.expectRevert("No active stake");
+        staking.reclaimAbandoned(alice);
+    }
+
+    // ============ activeStakers ============
+
+    function test_ActiveStakersTracking() public {
+        vm.startPrank(alice);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        vm.startPrank(bob);
+        clawd.approve(address(staking), STAKE_AMOUNT);
+        staking.stake();
+        vm.stopPrank();
+
+        assertEq(staking.activeStakers(), 2);
+
+        vm.warp(block.timestamp + LOCK_DURATION);
+        vm.prank(alice);
+        staking.unstake();
+
+        assertEq(staking.activeStakers(), 1);
     }
 
     // ============ unstake ============
@@ -144,14 +294,11 @@ contract ClawdStakeTest is Test {
     }
 
     function test_UnstakeAfterDay() public {
-        uint256 aliceBalBefore = clawd.balanceOf(alice);
-
         vm.startPrank(alice);
         clawd.approve(address(staking), STAKE_AMOUNT);
         staking.stake();
         vm.stopPrank();
 
-        // Warp 1 day
         vm.warp(block.timestamp + LOCK_DURATION);
 
         vm.prank(alice);
@@ -171,12 +318,10 @@ contract ClawdStakeTest is Test {
         vm.stopPrank();
 
         vm.warp(block.timestamp + LOCK_DURATION);
-
         vm.prank(alice);
         staking.unstake();
 
         uint256 aliceBalAfter = clawd.balanceOf(alice);
-        // Alice should have net +10K CLAWD (paid STAKE_AMOUNT, got back STAKE_AMOUNT + YIELD_AMOUNT)
         assertEq(aliceBalAfter - aliceBalBefore, YIELD_AMOUNT);
     }
 
@@ -189,7 +334,6 @@ contract ClawdStakeTest is Test {
         vm.stopPrank();
 
         vm.warp(block.timestamp + LOCK_DURATION);
-
         vm.prank(alice);
         staking.unstake();
 
@@ -203,7 +347,6 @@ contract ClawdStakeTest is Test {
         vm.stopPrank();
 
         vm.warp(block.timestamp + LOCK_DURATION);
-
         vm.prank(alice);
         staking.unstake();
 
@@ -215,12 +358,11 @@ contract ClawdStakeTest is Test {
     // ============ View functions ============
 
     function test_SlotsAvailable() public view {
-        // 2M reserve / 20K per slot = 100
         assertEq(staking.slotsAvailable(), 100);
     }
 
     function test_TimeUntilUnlock() public {
-        assertEq(staking.timeUntilUnlock(alice), 0); // no stake
+        assertEq(staking.timeUntilUnlock(alice), 0);
 
         vm.startPrank(alice);
         clawd.approve(address(staking), STAKE_AMOUNT);
@@ -232,23 +374,22 @@ contract ClawdStakeTest is Test {
     }
 
     function test_CanUnstake() public {
-        assertFalse(staking.canUnstake(alice)); // no stake
+        assertFalse(staking.canUnstake(alice));
 
         vm.startPrank(alice);
         clawd.approve(address(staking), STAKE_AMOUNT);
         staking.stake();
         vm.stopPrank();
 
-        assertFalse(staking.canUnstake(alice)); // locked
+        assertFalse(staking.canUnstake(alice));
 
         vm.warp(block.timestamp + LOCK_DURATION);
-        assertTrue(staking.canUnstake(alice)); // ready
+        assertTrue(staking.canUnstake(alice));
     }
 
     // ============ Multi-user ============
 
     function test_MultipleStakers() public {
-        // Alice, bob, carol all stake
         vm.startPrank(alice);
         clawd.approve(address(staking), STAKE_AMOUNT);
         staking.stake();
@@ -267,7 +408,6 @@ contract ClawdStakeTest is Test {
         assertEq(staking.totalStakers(), 3);
         assertEq(staking.totalStaked(), 3 * STAKE_AMOUNT);
 
-        // Warp and everyone unstakes
         vm.warp(block.timestamp + LOCK_DURATION);
 
         uint256 deadBefore = clawd.balanceOf(BURN_ADDRESS);
@@ -298,7 +438,6 @@ contract ClawdStakeTest is Test {
         vm.prank(alice);
         staking.unstake();
 
-        // Regardless of how long they waited, yield is always exactly YIELD_AMOUNT
         assertEq(clawd.balanceOf(alice) - aliceBalBefore, YIELD_AMOUNT);
     }
 }
