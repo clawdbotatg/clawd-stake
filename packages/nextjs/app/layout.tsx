@@ -6,8 +6,9 @@ import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 
 export const metadata = getMetadata({
-  title: "Scaffold-ETH 2 App",
-  description: "Built with 🏗 Scaffold-ETH 2",
+  title: "CLAWD Stake 🦞",
+  description: "Stake 1M CLAWD for 1 day, earn 1% yield, burn 1%. Lock it. Earn it. Burn it.",
+  imageRelativePath: "/thumbnail.png",
 });
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {

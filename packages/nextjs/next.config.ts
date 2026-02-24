@@ -21,6 +21,7 @@ const isIpfs = process.env.NEXT_PUBLIC_IPFS_BUILD === "true";
 if (isIpfs) {
   nextConfig.output = "export";
   nextConfig.trailingSlash = true;
+  nextConfig.assetPrefix = "./";
   nextConfig.images = {
     unoptimized: true,
   };
