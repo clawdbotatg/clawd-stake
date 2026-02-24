@@ -239,9 +239,9 @@ export default function Home() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white">
+    <div className="min-h-screen bg-base-200 text-base-content">
       {/* ── Stats Banner ─────────────────────────────────────────── */}
-      <div className="border-b border-white/10 py-4 px-4">
+      <div className="border-b border-base-content/10 py-4 px-4">
         <div className="max-w-4xl mx-auto flex flex-wrap justify-center gap-6 text-sm">
           <StatPill
             label="House Reserve"
@@ -288,8 +288,8 @@ export default function Home() {
           </div>
         )}
         <div className="text-7xl mb-4">🦞</div>
-        <h1 className="text-4xl font-bold mb-2 text-white">CLAWD Stake</h1>
-        <p className="text-white/50 text-base mb-2">
+        <h1 className="text-4xl font-bold mb-2 text-base-content">CLAWD Stake</h1>
+        <p className="text-base-content/50 text-base mb-2">
           Lock <span className="text-orange-400 font-bold">{IS_TEST ? "100" : "1,000,000"} CLAWD</span> for{" "}
           {IS_TEST ? "5 minutes" : "1 day"}.
           <br />
@@ -297,7 +297,7 @@ export default function Home() {
           <span className="text-red-500 font-bold ml-2">🔥 {IS_TEST ? "1" : "10,000"} burned.</span>
         </p>
         {clawdPrice && (
-          <p className="text-white/30 text-xs">
+          <p className="text-base-content/30 text-xs">
             CLAWD ≈ ${clawdPrice.toFixed(6)} · {IS_TEST ? "100" : "1M"} CLAWD ≈ {usd(STAKE_AMOUNT, clawdPrice)}
           </p>
         )}
@@ -305,15 +305,15 @@ export default function Home() {
 
       {/* ── Main Card ─────────────────────────────────────────────── */}
       <div className="max-w-xl mx-auto px-4 pb-16">
-        <div className="bg-white/5 border border-white/10 rounded-2xl p-8 flex flex-col items-center gap-6">
+        <div className="bg-base-content/5 border border-base-content/10 rounded-2xl p-8 flex flex-col items-center gap-6">
           {/* Active stake display */}
           {hasActivStake && (
             <div className="w-full">
-              <div className="flex justify-between text-sm mb-2 text-white/60">
+              <div className="flex justify-between text-sm mb-2 text-base-content/60">
                 <span>🔒 Locked</span>
                 <span>{isLocked ? `${countdownStr} remaining` : "Ready to claim!"}</span>
               </div>
-              <div className="w-full bg-white/10 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-base-content/10 rounded-full h-3 overflow-hidden">
                 <div
                   className="h-3 rounded-full transition-all duration-1000"
                   style={{
@@ -324,21 +324,21 @@ export default function Home() {
                   }}
                 />
               </div>
-              <div className="flex justify-between text-xs mt-1 text-white/30">
+              <div className="flex justify-between text-xs mt-1 text-base-content/30">
                 <span>Staked</span>
                 <span>{lockProgress}% elapsed</span>
               </div>
               <div className="mt-4 grid grid-cols-2 gap-3 text-center text-sm">
-                <div className="bg-white/5 rounded-xl p-3">
-                  <div className="text-white/50 text-xs mb-1">Your stake</div>
-                  <div className="font-bold text-white">{IS_TEST ? "100" : "1,000,000"} CLAWD</div>
-                  {clawdPrice && <div className="text-white/30 text-xs">{usd(STAKE_AMOUNT, clawdPrice)}</div>}
+                <div className="bg-base-content/5 rounded-xl p-3">
+                  <div className="text-base-content/50 text-xs mb-1">Your stake</div>
+                  <div className="font-bold text-base-content">{IS_TEST ? "100" : "1,000,000"} CLAWD</div>
+                  {clawdPrice && <div className="text-base-content/30 text-xs">{usd(STAKE_AMOUNT, clawdPrice)}</div>}
                 </div>
-                <div className="bg-white/5 rounded-xl p-3">
-                  <div className="text-white/50 text-xs mb-1">You&apos;ll receive</div>
+                <div className="bg-base-content/5 rounded-xl p-3">
+                  <div className="text-base-content/50 text-xs mb-1">You&apos;ll receive</div>
                   <div className="font-bold text-green-400">{IS_TEST ? "101" : "1,010,000"} CLAWD</div>
                   {clawdPrice && (
-                    <div className="text-white/30 text-xs">
+                    <div className="text-base-content/30 text-xs">
                       {usd(parseEther(IS_TEST ? "101" : "1010000"), clawdPrice)}
                     </div>
                   )}
@@ -350,10 +350,10 @@ export default function Home() {
           {/* No stake: show balance */}
           {!hasActivStake && isConnected && (
             <div className="w-full text-center">
-              <div className="text-white/40 text-sm">Your CLAWD balance</div>
+              <div className="text-base-content/40 text-sm">Your CLAWD balance</div>
               <div className="text-2xl font-bold text-orange-400">{fmtClawd(clawdBalance)} CLAWD</div>
               {clawdPrice && clawdBalance && (
-                <div className="text-white/30 text-xs">{usd(clawdBalance, clawdPrice)}</div>
+                <div className="text-base-content/30 text-xs">{usd(clawdBalance, clawdPrice)}</div>
               )}
               {isConnected && !hasEnoughClawd && (
                 <div className="text-red-400 text-xs mt-1">
@@ -381,7 +381,7 @@ export default function Home() {
                     disabled={isApproving}
                     className="w-full py-4 px-6 rounded-xl font-bold text-lg transition-all
                       bg-orange-500 hover:bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed
-                      text-white shadow-lg shadow-orange-500/20"
+                      text-base-content shadow-lg shadow-orange-500/20"
                   >
                     {isApproving ? (
                       <span className="flex items-center justify-center gap-2">
@@ -400,7 +400,7 @@ export default function Home() {
                     disabled={isStaking || !isApproved || !hasEnoughClawd}
                     className="w-full py-4 px-6 rounded-xl font-bold text-lg transition-all
                       bg-red-600 hover:bg-red-500 disabled:opacity-40 disabled:cursor-not-allowed
-                      text-white shadow-lg shadow-red-600/20"
+                      text-base-content shadow-lg shadow-red-600/20"
                   >
                     {isStaking ? (
                       <span className="flex items-center justify-center gap-2">
@@ -417,7 +417,7 @@ export default function Home() {
                   <button
                     disabled
                     className="w-full py-4 px-6 rounded-xl font-bold text-lg
-                      bg-white/5 text-white/40 cursor-not-allowed"
+                      bg-base-content/5 text-base-content/40 cursor-not-allowed"
                   >
                     🔒 Locked · {countdownStr}
                   </button>
@@ -430,7 +430,7 @@ export default function Home() {
                     disabled={isUnstaking}
                     className="w-full py-4 px-6 rounded-xl font-bold text-lg transition-all
                       bg-green-600 hover:bg-green-500 disabled:opacity-50 disabled:cursor-not-allowed
-                      text-white shadow-lg shadow-green-600/20 animate-pulse"
+                      text-base-content shadow-lg shadow-green-600/20 animate-pulse"
                   >
                     {isUnstaking ? (
                       <span className="flex items-center justify-center gap-2">
@@ -447,7 +447,7 @@ export default function Home() {
 
           {/* Contract address */}
           {stakeContract?.address && (
-            <div className="w-full pt-2 border-t border-white/10 flex items-center justify-center gap-2 text-xs text-white/30">
+            <div className="w-full pt-2 border-t border-base-content/10 flex items-center justify-center gap-2 text-xs text-base-content/30">
               <span>Contract:</span>
               <Address address={stakeContract.address} size="xs" />
             </div>
@@ -455,19 +455,20 @@ export default function Home() {
         </div>
 
         {/* How it works */}
-        <div className="mt-8 bg-white/3 border border-white/5 rounded-xl p-6 text-sm text-white/50">
-          <h3 className="text-white/70 font-semibold mb-3">How it works</h3>
+        <div className="mt-8 bg-base-content/3 border border-white/5 rounded-xl p-6 text-sm text-base-content/50">
+          <h3 className="text-base-content/70 font-semibold mb-3">How it works</h3>
           <ol className="space-y-2 list-decimal list-inside">
             <li>
               Approve the contract to spend{" "}
               <span className="text-orange-400">{IS_TEST ? "100" : "1,000,000"} CLAWD</span>
             </li>
             <li>
-              Stake — your CLAWD locks for <span className="text-white/70">{IS_TEST ? "5 minutes" : "24 hours"}</span>
+              Stake — your CLAWD locks for{" "}
+              <span className="text-base-content/70">{IS_TEST ? "5 minutes" : "24 hours"}</span>
             </li>
             <li>
               After {IS_TEST ? "5 min" : "24h"}: claim your{" "}
-              <span className="text-white/70">{IS_TEST ? "100" : "1M"} principal</span> +{" "}
+              <span className="text-base-content/70">{IS_TEST ? "100" : "1M"} principal</span> +{" "}
               <span className="text-green-400">{IS_TEST ? "1" : "10K"} CLAWD yield</span>
             </li>
             <li>
@@ -475,7 +476,7 @@ export default function Home() {
               every unstake
             </li>
           </ol>
-          <p className="mt-3 text-white/30 text-xs">
+          <p className="mt-3 text-base-content/30 text-xs">
             One stake per address. House pre-funds rewards — check &ldquo;Open Slots&rdquo; above before staking.
           </p>
         </div>
@@ -489,9 +490,9 @@ export default function Home() {
 function StatPill({ label, value, sub, color }: { label: string; value: string; sub?: string | null; color: string }) {
   return (
     <div className="text-center">
-      <div className="text-white/30 text-xs mb-0.5">{label}</div>
+      <div className="text-base-content/30 text-xs mb-0.5">{label}</div>
       <div className={`font-bold ${color}`}>{value}</div>
-      {sub && <div className="text-white/20 text-xs">{sub}</div>}
+      {sub && <div className="text-base-content/20 text-xs">{sub}</div>}
     </div>
   );
 }
