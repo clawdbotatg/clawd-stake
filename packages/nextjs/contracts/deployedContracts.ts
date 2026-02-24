@@ -7,990 +7,586 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   8453: {
     ClawdStake: {
-      address: "0xc9d25b7ad08f2d238302e56681b373b3e18b8e00",
+      address: "0x90552946EdD5a6BAD7647655Da6C805A188dfd25",
       abi: [
         {
-          type: "constructor",
-          inputs: [
-            {
-              name: "_clawd",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
+                "type": "constructor",
+                "inputs": [
+                        {
+                                "name": "_clawd",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "function",
-          name: "BURN_ADDRESS",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "BURN_ADDRESS",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "BURN_AMOUNT",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "BURN_AMOUNT",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "LOCK_DURATION",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "LOCK_DURATION",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "STAKE_AMOUNT",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "STAKE_AMOUNT",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "YIELD_AMOUNT",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "YIELD_AMOUNT",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "canUnstake",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "bool",
-              internalType: "bool",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "activeStakers",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "clawd",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "contract IERC20",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "canUnstake",
+                "inputs": [
+                        {
+                                "name": "user",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "bool",
+                                "internalType": "bool"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "getStake",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "tuple",
-              internalType: "struct ClawdStake.StakeInfo",
-              components: [
-                {
-                  name: "stakedAt",
-                  type: "uint256",
-                  internalType: "uint256",
-                },
-                {
-                  name: "active",
-                  type: "bool",
-                  internalType: "bool",
-                },
-              ],
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "clawd",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "address",
+                                "internalType": "contract IERC20"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "houseReserve",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "getStake",
+                "inputs": [
+                        {
+                                "name": "user",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "tuple",
+                                "internalType": "struct ClawdStake.StakeInfo",
+                                "components": [
+                                        {
+                                                "name": "stakedAt",
+                                                "type": "uint256",
+                                                "internalType": "uint256"
+                                        },
+                                        {
+                                                "name": "active",
+                                                "type": "bool",
+                                                "internalType": "bool"
+                                        }
+                                ]
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "loadHouse",
-          inputs: [
-            {
-              name: "amount",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          outputs: [],
-          stateMutability: "nonpayable",
+                "type": "function",
+                "name": "hasStakedBefore",
+                "inputs": [
+                        {
+                                "name": "",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "bool",
+                                "internalType": "bool"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "owner",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "houseReserve",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "renounceOwnership",
-          inputs: [],
-          outputs: [],
-          stateMutability: "nonpayable",
+                "type": "function",
+                "name": "loadHouse",
+                "inputs": [
+                        {
+                                "name": "amount",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "function",
-          name: "slotsAvailable",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "owner",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "stake",
-          inputs: [],
-          outputs: [],
-          stateMutability: "nonpayable",
+                "type": "function",
+                "name": "reclaimAbandoned",
+                "inputs": [
+                        {
+                                "name": "user",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "function",
-          name: "stakes",
-          inputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "stakedAt",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "active",
-              type: "bool",
-              internalType: "bool",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "renounceOwnership",
+                "inputs": [],
+                "outputs": [],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "function",
-          name: "timeUntilUnlock",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "slotsAvailable",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "totalBurned",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "stake",
+                "inputs": [],
+                "outputs": [],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "function",
-          name: "totalStaked",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "stakes",
+                "inputs": [
+                        {
+                                "name": "",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "outputs": [
+                        {
+                                "name": "stakedAt",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        },
+                        {
+                                "name": "active",
+                                "type": "bool",
+                                "internalType": "bool"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "totalStakers",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "timeUntilUnlock",
+                "inputs": [
+                        {
+                                "name": "user",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "totalYieldPaid",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
+                "type": "function",
+                "name": "totalAccountedBalance",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "transferOwnership",
-          inputs: [
-            {
-              name: "newOwner",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [],
-          stateMutability: "nonpayable",
+                "type": "function",
+                "name": "totalBurned",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "unstake",
-          inputs: [],
-          outputs: [],
-          stateMutability: "nonpayable",
+                "type": "function",
+                "name": "totalCommitted",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "function",
-          name: "withdrawHouse",
-          inputs: [
-            {
-              name: "amount",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          outputs: [],
-          stateMutability: "nonpayable",
+                "type": "function",
+                "name": "totalStaked",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "event",
-          name: "HouseLoaded",
-          inputs: [
-            {
-              name: "owner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "amount",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "newReserve",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
+                "type": "function",
+                "name": "totalStakers",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "event",
-          name: "HouseWithdrawn",
-          inputs: [
-            {
-              name: "owner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "amount",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "newReserve",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
+                "type": "function",
+                "name": "totalYieldPaid",
+                "inputs": [],
+                "outputs": [
+                        {
+                                "name": "",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "stateMutability": "view"
         },
         {
-          type: "event",
-          name: "OwnershipTransferred",
-          inputs: [
-            {
-              name: "previousOwner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "newOwner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-          ],
-          anonymous: false,
+                "type": "function",
+                "name": "transferOwnership",
+                "inputs": [
+                        {
+                                "name": "newOwner",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "event",
-          name: "Staked",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "unlocksAt",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
+                "type": "function",
+                "name": "unstake",
+                "inputs": [],
+                "outputs": [],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "event",
-          name: "Unstaked",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "principal",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "yield",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "burned",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
+                "type": "function",
+                "name": "withdrawHouse",
+                "inputs": [
+                        {
+                                "name": "amount",
+                                "type": "uint256",
+                                "internalType": "uint256"
+                        }
+                ],
+                "outputs": [],
+                "stateMutability": "nonpayable"
         },
         {
-          type: "error",
-          name: "OwnableInvalidOwner",
-          inputs: [
-            {
-              name: "owner",
-              type: "address",
-              internalType: "address",
-            },
-          ],
+                "type": "event",
+                "name": "AbandonedStakeReclaimed",
+                "inputs": [
+                        {
+                                "name": "user",
+                                "type": "address",
+                                "indexed": true,
+                                "internalType": "address"
+                        },
+                        {
+                                "name": "returnedToReserve",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        }
+                ],
+                "anonymous": false
         },
         {
-          type: "error",
-          name: "OwnableUnauthorizedAccount",
-          inputs: [
-            {
-              name: "account",
-              type: "address",
-              internalType: "address",
-            },
-          ],
+                "type": "event",
+                "name": "HouseLoaded",
+                "inputs": [
+                        {
+                                "name": "owner",
+                                "type": "address",
+                                "indexed": true,
+                                "internalType": "address"
+                        },
+                        {
+                                "name": "amount",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        },
+                        {
+                                "name": "newReserve",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        }
+                ],
+                "anonymous": false
         },
         {
-          type: "error",
-          name: "SafeERC20FailedOperation",
-          inputs: [
-            {
-              name: "token",
-              type: "address",
-              internalType: "address",
-            },
-          ],
+                "type": "event",
+                "name": "HouseWithdrawn",
+                "inputs": [
+                        {
+                                "name": "owner",
+                                "type": "address",
+                                "indexed": true,
+                                "internalType": "address"
+                        },
+                        {
+                                "name": "amount",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        },
+                        {
+                                "name": "newReserve",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        }
+                ],
+                "anonymous": false
         },
-      ],
+        {
+                "type": "event",
+                "name": "OwnershipTransferred",
+                "inputs": [
+                        {
+                                "name": "previousOwner",
+                                "type": "address",
+                                "indexed": true,
+                                "internalType": "address"
+                        },
+                        {
+                                "name": "newOwner",
+                                "type": "address",
+                                "indexed": true,
+                                "internalType": "address"
+                        }
+                ],
+                "anonymous": false
+        },
+        {
+                "type": "event",
+                "name": "Staked",
+                "inputs": [
+                        {
+                                "name": "user",
+                                "type": "address",
+                                "indexed": true,
+                                "internalType": "address"
+                        },
+                        {
+                                "name": "unlocksAt",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        }
+                ],
+                "anonymous": false
+        },
+        {
+                "type": "event",
+                "name": "Unstaked",
+                "inputs": [
+                        {
+                                "name": "user",
+                                "type": "address",
+                                "indexed": true,
+                                "internalType": "address"
+                        },
+                        {
+                                "name": "principal",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        },
+                        {
+                                "name": "yield",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        },
+                        {
+                                "name": "burned",
+                                "type": "uint256",
+                                "indexed": false,
+                                "internalType": "uint256"
+                        }
+                ],
+                "anonymous": false
+        },
+        {
+                "type": "error",
+                "name": "OwnableInvalidOwner",
+                "inputs": [
+                        {
+                                "name": "owner",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ]
+        },
+        {
+                "type": "error",
+                "name": "OwnableUnauthorizedAccount",
+                "inputs": [
+                        {
+                                "name": "account",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ]
+        },
+        {
+                "type": "error",
+                "name": "SafeERC20FailedOperation",
+                "inputs": [
+                        {
+                                "name": "token",
+                                "type": "address",
+                                "internalType": "address"
+                        }
+                ]
+        }
+],
       inheritedFunctions: {},
-      deployedOnBlock: 42512801,
-    },
-  },
-  31337: {
-    ClawdStake: {
-      address: "0xa15bb66138824a1c7167f5e85b957d04dd34e468",
-      abi: [
-        {
-          type: "constructor",
-          inputs: [
-            {
-              name: "_clawd",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          stateMutability: "nonpayable",
-        },
-        {
-          type: "function",
-          name: "BURN_ADDRESS",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "BURN_AMOUNT",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "LOCK_DURATION",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "STAKE_AMOUNT",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "YIELD_AMOUNT",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "canUnstake",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "bool",
-              internalType: "bool",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "clawd",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "contract IERC20",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "getStake",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "tuple",
-              internalType: "struct ClawdStake.StakeInfo",
-              components: [
-                {
-                  name: "stakedAt",
-                  type: "uint256",
-                  internalType: "uint256",
-                },
-                {
-                  name: "active",
-                  type: "bool",
-                  internalType: "bool",
-                },
-              ],
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "houseReserve",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "loadHouse",
-          inputs: [
-            {
-              name: "amount",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          outputs: [],
-          stateMutability: "nonpayable",
-        },
-        {
-          type: "function",
-          name: "owner",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "renounceOwnership",
-          inputs: [],
-          outputs: [],
-          stateMutability: "nonpayable",
-        },
-        {
-          type: "function",
-          name: "slotsAvailable",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "stake",
-          inputs: [],
-          outputs: [],
-          stateMutability: "nonpayable",
-        },
-        {
-          type: "function",
-          name: "stakes",
-          inputs: [
-            {
-              name: "",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "stakedAt",
-              type: "uint256",
-              internalType: "uint256",
-            },
-            {
-              name: "active",
-              type: "bool",
-              internalType: "bool",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "timeUntilUnlock",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "totalBurned",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "totalStaked",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "totalStakers",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "totalYieldPaid",
-          inputs: [],
-          outputs: [
-            {
-              name: "",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          stateMutability: "view",
-        },
-        {
-          type: "function",
-          name: "transferOwnership",
-          inputs: [
-            {
-              name: "newOwner",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-          outputs: [],
-          stateMutability: "nonpayable",
-        },
-        {
-          type: "function",
-          name: "unstake",
-          inputs: [],
-          outputs: [],
-          stateMutability: "nonpayable",
-        },
-        {
-          type: "function",
-          name: "withdrawHouse",
-          inputs: [
-            {
-              name: "amount",
-              type: "uint256",
-              internalType: "uint256",
-            },
-          ],
-          outputs: [],
-          stateMutability: "nonpayable",
-        },
-        {
-          type: "event",
-          name: "HouseLoaded",
-          inputs: [
-            {
-              name: "owner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "amount",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "newReserve",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
-        },
-        {
-          type: "event",
-          name: "HouseWithdrawn",
-          inputs: [
-            {
-              name: "owner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "amount",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "newReserve",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
-        },
-        {
-          type: "event",
-          name: "OwnershipTransferred",
-          inputs: [
-            {
-              name: "previousOwner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "newOwner",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-          ],
-          anonymous: false,
-        },
-        {
-          type: "event",
-          name: "Staked",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "unlocksAt",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
-        },
-        {
-          type: "event",
-          name: "Unstaked",
-          inputs: [
-            {
-              name: "user",
-              type: "address",
-              indexed: true,
-              internalType: "address",
-            },
-            {
-              name: "principal",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "yield",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-            {
-              name: "burned",
-              type: "uint256",
-              indexed: false,
-              internalType: "uint256",
-            },
-          ],
-          anonymous: false,
-        },
-        {
-          type: "error",
-          name: "OwnableInvalidOwner",
-          inputs: [
-            {
-              name: "owner",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "OwnableUnauthorizedAccount",
-          inputs: [
-            {
-              name: "account",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-        {
-          type: "error",
-          name: "SafeERC20FailedOperation",
-          inputs: [
-            {
-              name: "token",
-              type: "address",
-              internalType: "address",
-            },
-          ],
-        },
-      ],
-      inheritedFunctions: {},
-      deployedOnBlock: 2,
+      deployedOnBlock: 42582152,
     },
   },
 } as const;
