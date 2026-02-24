@@ -1,14 +1,68 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Address } from "@scaffold-ui/components";
 import { formatEther, parseEther } from "viem";
 import { base } from "viem/chains";
-import { useAccount, useChainId } from "wagmi";
+import { useAccount, useChainId, useConnectorClient } from "wagmi";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
 const STAKE_AMOUNT = parseEther("1000000");
+
+// ─── Mobile deep link helper ──────────────────────────────────────────────
+function useOpenWallet() {
+  const { data: connectorClient } = useConnectorClient();
+
+  return useCallback(() => {
+    if (typeof window === "undefined") return;
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    if (!isMobile || window.ethereum) return; // Skip desktop or in-app browser
+
+    const allIds = [
+      (connectorClient as any)?.connector?.id,
+      (connectorClient as any)?.connector?.name,
+      localStorage.getItem("wagmi.recentConnectorId"),
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+    let wcWallet = "";
+    try {
+      const wcKey = Object.keys(localStorage).find(k => k.startsWith("wc@2:client"));
+      if (wcKey) wcWallet = (localStorage.getItem(wcKey) || "").toLowerCase();
+    } catch {}
+    const search = `${allIds} ${wcWallet}`;
+
+    const schemes: [string[], string][] = [
+      [["rainbow"], "rainbow://"],
+      [["metamask"], "metamask://"],
+      [["coinbase", "cbwallet"], "cbwallet://"],
+      [["trust"], "trust://"],
+      [["phantom"], "phantom://"],
+    ];
+
+    for (const [keywords, scheme] of schemes) {
+      if (keywords.some(k => search.includes(k))) {
+        window.location.href = scheme;
+        return;
+      }
+    }
+  }, [connectorClient]);
+}
+
+function useWriteAndOpen() {
+  const openWallet = useOpenWallet();
+  return useCallback(
+    <T,>(writeFn: () => Promise<T>): Promise<T> => {
+      const promise = writeFn();
+      setTimeout(openWallet, 2000);
+      return promise;
+    },
+    [openWallet],
+  );
+}
 const IS_TEST = false;
 const LOCK_DURATION = 86400; // 24 hours in seconds
 const ZERO_ADDR = "0x0000000000000000000000000000000000000000" as const;
@@ -70,6 +124,8 @@ export default function Home() {
   const chainId = useChainId();
   const isBase = chainId === base.id;
   const clawdPrice = useCLAWDPrice();
+
+  const writeAndOpen = useWriteAndOpen();
 
   // ── ClawdStake contract info ──
   const { data: stakeContract } = useDeployedContractInfo({ contractName: "ClawdStake" });
@@ -148,21 +204,23 @@ export default function Home() {
 
   // ── Action handlers ──
   const handleApprove = async () => {
-    await approveClawd({
-      functionName: "approve",
-      args: [stakeContract?.address ?? ZERO_ADDR, STAKE_AMOUNT],
-    });
+    await writeAndOpen(() =>
+      approveClawd({
+        functionName: "approve",
+        args: [stakeContract?.address ?? ZERO_ADDR, STAKE_AMOUNT],
+      }),
+    );
     await refetchAllowance();
   };
 
   const handleStake = async () => {
-    await stakeWrite({ functionName: "stake" });
+    await writeAndOpen(() => stakeWrite({ functionName: "stake" }));
     await refetchStake();
     await refetchAllowance();
   };
 
   const handleUnstake = async () => {
-    await unstakeWrite({ functionName: "unstake" });
+    await writeAndOpen(() => unstakeWrite({ functionName: "unstake" }));
     await refetchStake();
     await refetchTime();
     await refetchCanUnstake();
@@ -308,12 +366,7 @@ export default function Home() {
           {/* ── Four-Button Flow ── */}
           <div className="w-full flex justify-center">
             {/* 1. Not connected */}
-            {!isConnected && (
-              <div className="flex flex-col items-center gap-3 w-full">
-                <p className="text-white/40 text-sm">Connect your wallet to stake</p>
-                <RainbowKitCustomConnectButton />
-              </div>
-            )}
+            {!isConnected && <RainbowKitCustomConnectButton />}
 
             {/* 2. Wrong network */}
             {isConnected && !isBase && <RainbowKitCustomConnectButton />}
