@@ -8,9 +8,9 @@ import { useAccount, useChainId } from "wagmi";
 import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
 import { useDeployedContractInfo, useScaffoldReadContract, useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 
-const STAKE_AMOUNT = parseEther("100");
-const IS_TEST = true;
-const LOCK_DURATION = 300; // 5 minutes in seconds
+const STAKE_AMOUNT = parseEther("1000000");
+const IS_TEST = false;
+const LOCK_DURATION = 86400; // 24 hours in seconds
 const ZERO_ADDR = "0x0000000000000000000000000000000000000000" as const;
 
 // ─── Countdown hook ────────────────────────────────────────────────────────
@@ -72,47 +72,47 @@ export default function Home() {
   const clawdPrice = useCLAWDPrice();
 
   // ── ClawdStake contract info ──
-  const { data: stakeContract } = useDeployedContractInfo({ contractName: "ClawdStakeTest" });
+  const { data: stakeContract } = useDeployedContractInfo({ contractName: "ClawdStake" });
 
   // ── Contract reads ──
   const { data: houseReserve } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "houseReserve",
   });
   const { data: totalStaked } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "totalStaked",
   });
   const { data: totalYieldPaid } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "totalYieldPaid",
   });
   const { data: totalBurned } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "totalBurned",
   });
   const { data: slotsAvailable } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "slotsAvailable",
   });
   const { data: totalStakers } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "totalStakers",
   });
 
   // ── User's stake ──
   const { data: stakeInfo, refetch: refetchStake } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "getStake",
     args: [address ?? ZERO_ADDR],
   });
   const { refetch: refetchTime } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "timeUntilUnlock",
     args: [address ?? ZERO_ADDR],
   });
   const { refetch: refetchCanUnstake } = useScaffoldReadContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
     functionName: "canUnstake",
     args: [address ?? ZERO_ADDR],
   });
@@ -136,10 +136,10 @@ export default function Home() {
     contractName: "CLAWD",
   });
   const { writeContractAsync: stakeWrite, isPending: isStaking } = useScaffoldWriteContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
   });
   const { writeContractAsync: unstakeWrite, isPending: isUnstaking } = useScaffoldWriteContract({
-    contractName: "ClawdStakeTest",
+    contractName: "ClawdStake",
   });
 
   // ── Countdown ──
